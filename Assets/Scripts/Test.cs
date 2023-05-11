@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public string toto;
+    private int age;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(GenerateRandomAge());
     }
 
     // Update is called once per frame
-    void Update()
+    private int GenerateRandomAge()
     {
+         age = Random.Range(1, 101);
+        return age;
+       
         
     }
 }
