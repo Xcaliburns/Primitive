@@ -6,20 +6,41 @@ public class EnemyMove : MonoBehaviour
 {
 
     public float speed = 10.0f;
-    private Rigidbody enemyRb;
     private GameObject player;
-    // Start is called before the first frame update
+
     void Start()
     {
-        enemyRb = GetComponent<Rigidbody>();
+
         player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         Vector3 direction = (player.transform.position - transform.position).normalized;
-      //  enemyRb.AddForce(direction * speed * Time.deltaTime);
-        transform.Translate ( direction * speed * Time.deltaTime);
+        transform.position += (direction * speed * Time.deltaTime);
+        // normalement ca ne sort pas mais soyons prudents .
+        if (transform.position.y < -10 || transform.position.y > 10)
+        {
+            Destroy(gameObject);
+        }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("you collide an Enemy");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Powerup"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
+
 }
